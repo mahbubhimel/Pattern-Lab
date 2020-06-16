@@ -1,3 +1,18 @@
+class ResidualBlock(nn.Module):
+    def __init__(self, ndim):
+        super(ResidualBlock, self).__init__()
+
+        self.encoder = nn.Sequential(
+            nn.Conv2d(ndim, ndim, 3, padding=1, bias=False),
+            nn.BatchNorm2d(ndim),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(ndim, ndim, 3, padding=1, bias=False),
+            nn.BatchNorm2d(ndim)
+        )
+
+    def forward(self, x):
+        return x + self.encoder(x)
+
 class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
@@ -46,17 +61,4 @@ class Generator(nn.Module):
             nn.Tanh()
         )
 
-        # conditioning augmentation
-        self.mu = nn.Sequential(
-            nn.Linear(512, 128),
-            nn.LeakyReLU(0.2, inplace=True)
-        )
-        self.log_sigma = nn.Sequential(
-            nn.Linear(512, 128),
-            nn.LeakyReLU(0.2, inplace=True)
-        )
 
-        self.txt_encoder_f = nn.GRUCell(300, 512)
-        self.txt_encoder_b = nn.GRUCell(300, 512)
-
-        self.apply(init_weights
