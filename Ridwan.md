@@ -1,1 +1,1 @@
-[Lets go to Quora](https://www.quora.com)
+[GAN Supervised or Unsupervised](https://www.quora.com/Why-cant-we-say-GAN-is-supervised-learning-even-though-it-has-fake-and-non-fake-labels)
